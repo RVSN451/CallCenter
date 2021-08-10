@@ -9,8 +9,8 @@ public class AutomaticTelephoneExchange {
     private static AutomaticTelephoneExchange instance = null;
 
     private String name;
-    protected ConcurrentLinkedQueue<Call> callQueue = new ConcurrentLinkedQueue<>();
-    protected List<Operator> listOperator = new ArrayList<>();
+    private ConcurrentLinkedQueue<Call> callQueue = new ConcurrentLinkedQueue<>();
+    private List<Operator> listOperator = new ArrayList<>();
 
     private AutomaticTelephoneExchange() {
         name = "ATE";
@@ -21,14 +21,18 @@ public class AutomaticTelephoneExchange {
         return instance;
     }
 
+    public Call getCallQueuePoll() {
+        return callQueue.poll();
+    }
+
+    public int getCallQueueSize() {
+        return callQueue.size();
+    }
+
     public Operator addTphOperator(String nameOperator) {
         Operator operator = new Operator(nameOperator);
         listOperator.add(operator);
         return operator;
-    }
-
-    public boolean checkCallQueue() {
-        return callQueue.peek() != null;
     }
 
     public void generateCalls() {
@@ -42,5 +46,6 @@ public class AutomaticTelephoneExchange {
                 e.printStackTrace();
             }
         }
+        Thread.interrupted();
     }
 }

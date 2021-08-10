@@ -3,7 +3,7 @@ package org.example;
 
 public class App {
     public static final long MAIN_SLEEP = 300L;
-    public static final long ATE_SLEEP = 300L;
+    public static final long ATE_SLEEP = 234L;
     public static final long OPERATOR_HANDLING_SLEEP = 900L;
     public static final long OPERATOR_RESET_SLEEP = 70L;
     public static final int CALLS_FOR_OPERATOR = 3;
@@ -26,7 +26,7 @@ public class App {
         new Thread(operatorGroup, operator3::phoneCallHandling, "!ОПЕРАТОР-3").start();
 
         while (true) {
-            if (!thread_1.isAlive()) {
+            if (!thread_1.isAlive() && (ate.getCallQueueSize() == 0)) {
                 operatorGroup.interrupt();
                 break;
             } else {
@@ -37,5 +37,7 @@ public class App {
                 }
             }
         }
+        System.out.println("");
+        operatorGroup.interrupt();
     }
 }
