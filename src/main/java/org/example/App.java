@@ -30,9 +30,9 @@ public class App {
 
         try {
             if (!service.awaitTermination(WORKING_HOURS, TimeUnit.SECONDS)){
-                service.shutdownNow();
-            }
 
+            }
+            service.shutdownNow();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
